@@ -21,9 +21,10 @@ const Config = require('./lib/config')
 const MetarRequest = require('./lib/metar_request').MetarRequest
 const TafRequest = require('./lib/metar_request').TafRequest
 const WeatherRequest = require('./lib/metar_request').WeatherRequest
-const MapLightController = require('./lib/map_light_controller');
+const MapLightControllerFactory = require('./lib/map_light_controller_factory');
+console.log(MapLightControllerFactory);
 const Cache = require('./lib/cache');
-const mapLightController = MapLightController.create()
+const mapLightController = MapLightControllerFactory.create()
 
 const BLEPeripheral = require('./lib/bluetooth/BLEPeripheral');
 
