@@ -22,7 +22,6 @@ const MetarRequest = require('./lib/metar_request').MetarRequest
 const TafRequest = require('./lib/metar_request').TafRequest
 const WeatherRequest = require('./lib/metar_request').WeatherRequest
 const MapLightControllerFactory = require('./lib/map_light_controller_factory');
-console.log(MapLightControllerFactory);
 const Cache = require('./lib/cache');
 const mapLightController = MapLightControllerFactory.create()
 
@@ -66,6 +65,14 @@ app.ws('/metar.ws', (ws, req) => {
           case messageTypes.leds.OFF:
             logger.info("ledState off");
             mapLightController.lightsOff();
+            break;
+          case messageTypes.leds.MODE.RAINBOW:
+            logger.info("Changing to rainbow mode");
+            mapLightController.setMode(messageTypes.leds.MODE.RAINBOW);
+            break;
+          case messageTypes.leds.MODE.METAR:
+            logger.info("Changing to metar mode");
+            mapLightController.setMode(messageTypes.leds.MODE.METAR);
             break;
           case messageTypes.leds.STATUS:
             console.log('Sending', mapLightController.getLightStatus());
@@ -153,9 +160,10 @@ sendData = (ws, payloadName, payload, repeat=true, sendInterval=10) => {
 // Begin fetching metars
 WeatherRequest.call();
 mapLightController.call();
+mapLightController.setMode(messageTypes.leds.MODE.RAINBOW);
 
 // Start Bluetooth device
 (new BLEPeripheral).call();
 
-app.listen(port, () => logger.info(`Metar Map listening on port ${port}!`))
+app.listen(port, () => logger.info(`Metar Map listening on port ${port}!`));
 
