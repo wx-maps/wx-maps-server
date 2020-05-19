@@ -38,6 +38,9 @@ app.use(cors());
 app.ws('/metar.ws', (ws, req) => {
   ws.on('message', (msg) => {
     const message = new Message(msg)
+    console.log(msg)
+    console.log(message)
+    console.log('type ' + message.type)
     switch(message.type){
       case messageTypes.SUBSCRIBE:
         switch(message.payload){
