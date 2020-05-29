@@ -1,0 +1,21 @@
+version: '3.2'
+services:
+  # Updates our containers when new docker images are pushed
+  watchtower:
+    image: containrrr/watchtower:armhf-latest
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /root/.docker/config.json:/config.json
+  server:
+    image: wx-maps/wx-maps-server
+    ports:
+      - '4567:80'
+    privileged: true
+    network_mode: 'host'
+    volumes:
+      - type: "bind"
+        source: "/lib/modules"
+        target: "/lib/modules"
+    restart: 'unless-stopped'
+
+# docker run --privileged --network=host --mount type=bind,source=/lib/modules,target='/lib/modules' wx-maps/wx-maps-server

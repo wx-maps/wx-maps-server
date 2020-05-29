@@ -75,7 +75,7 @@ app.ws('/metar.ws', (ws, req) => {
             mapLightController.setMode(messageTypes.leds.MODE.METAR);
             break;
           case messageTypes.leds.STATUS:
-            console.log('Sending', mapLightController.getLightStatus());
+            logger.info('Sending', mapLightController.getLightStatus());
             sendData(ws, 'light-status', mapLightController.getLightStatus(), false)
             break;
           default:
@@ -135,7 +135,7 @@ sendLogData = (ws) => {
 // * repeat       - if the data should be sent repeatedly
 // * sendInterval - how often to send the data
 sendData = (ws, payloadName, payload, repeat=true, sendInterval=10) => {
-  logger.info('Sending ' + payloadName + ' data');
+  logger.debug('Sending ' + payloadName + ' data');
   if(!ws){ logger.info("WS is null"); return false }
 
   if(ws.readyState === 1){
