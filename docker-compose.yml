@@ -6,6 +6,9 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - /root/.docker/config.json:/config.json
+    environment:
+      - WATCHTOWER_DEBUG=false
+      - WATCHTOWER_POLL_INTERVAL=300
   server:
     image: wx-maps/wx-maps-server
     ports:
