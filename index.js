@@ -35,6 +35,10 @@ const messageTypes = require('./lib/message_types');
 app.use(bodyParser.json());
 app.use(cors());
 
+app.get('/', (req, res) => {
+  res.send('hello!')
+})
+
 app.ws('/metar.ws', (ws, req) => {
   ws.on('message', (msg) => {
     const message = new Message(msg)
@@ -160,7 +164,7 @@ sendData = (ws, payloadName, payload, repeat=true, sendInterval=10) => {
 // Begin fetching metars
 WeatherRequest.call();
 mapLightController.call();
-mapLightController.setMode(messageTypes.leds.MODE.RAINBOW);
+// mapLightController.setMode(messageTypes.leds.MODE.RAINBOW);
 
 // Start Bluetooth device
 (new BLEPeripheral).call();

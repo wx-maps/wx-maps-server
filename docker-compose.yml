@@ -2,22 +2,28 @@ version: '3.2'
 services:
   # Updates our containers when new docker images are pushed
   watchtower:
+    container_name: wx-maps-watchtower
+    restart: 'unless-stopped'
     image: containrrr/watchtower:armhf-latest
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - /root/.docker/config.json:/config.json
     environment:
-      - WATCHTOWER_DEBUG=false
+      - WATCHTOWER_DEBUG=true
       - WATCHTOWER_POLL_INTERVAL=300
+  client:
+    container_name: wx-maps-client
+    image: rickrrr/wx-maps-client
     restart: 'unless-stopped'
-  server:
-    image: wx-maps/wx-maps-server
     ports:
-      - '4567:80'
+      - 80:80
+  server:
+    container_name: wx-maps-server
+    image: rickrrr/wx-maps-server
+    restart: 'unless-stopped'
     privileged: true
     network_mode: 'host'
     volumes:
       - type: "bind"
         source: "/lib/modules"
         target: "/lib/modules"
-    restart: 'unless-stopped'
