@@ -1,5 +1,4 @@
-#repo_name := wxmaps
-repo_name := rickrrr
+repo_name := wxmaps
 image := wx-maps-server
 image_name := $(repo_name)/$(image)
 
