@@ -13,13 +13,13 @@ services:
       - WATCHTOWER_POLL_INTERVAL=300
   client:
     container_name: wx-maps-client
-    image: rickrrr/wx-maps-client
+    image: wxmaps/wx-maps-client
     restart: 'unless-stopped'
     ports:
       - 80:80
   server:
     container_name: wx-maps-server
-    image: rickrrr/wx-maps-server
+    image: wxmaps/wx-maps-server
     restart: 'unless-stopped'
     privileged: true
     network_mode: 'host'
