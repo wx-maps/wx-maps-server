@@ -27,7 +27,6 @@ const BLEPeripheral = require('./lib/bluetooth/BLEPeripheral');
 const logger = require('./lib/logger')('server');
 
 const Message = require('./lib/message');
-const messageTypes = require('./lib/message_types');
 const WebSocket = require('./lib/web_socket')
 
 app.use(bodyParser.json());
@@ -44,17 +43,18 @@ app.ws('/metar.ws', (ws, req) => {
   })
 })
 
-// Serve our production build
-// app.use(express.static(path.join(__dirname, '../client/build')));
-
 
 // Begin fetching metars
 WeatherRequest.call();
 mapLightController.call();
-// mapLightController.setMode(messageTypes.leds.MODE.RAINBOW);
 
 // Start Bluetooth device
 (new BLEPeripheral).call();
 
 app.listen(port, () => logger.info(`Metar Map listening on port ${port}!`));
 
+
+process.on('SIGTERM', () => {
+  console.log("Exiting on SUGTERM");
+  process.exit()
+})
