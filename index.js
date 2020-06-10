@@ -5,10 +5,6 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const https = require('https');
-// const convert = require('xml-js');
-// const os = require('os');
-// const fs = require('fs');
-// const readline = require('readline');
 
 const app = express();
 enableWs(app)
@@ -16,8 +12,6 @@ enableWs(app)
 // Local libs
 const getPort = require('./lib/getPort');
 const port = getPort();
-// const MetarRequest = require('./lib/metar_request').MetarRequest
-// const TafRequest = require('./lib/metar_request').TafRequest
 const WeatherRequest = require('./lib/metar_request').WeatherRequest
 const MapLightControllerFactory = require('./lib/map_light_controller_factory');
 const mapLightController = MapLightControllerFactory.create()
