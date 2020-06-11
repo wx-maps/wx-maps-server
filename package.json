@@ -1,7 +1,7 @@
 {
-  "name": "metar-map-server",
+  "name": "wx-maps-server",
   "version": "1.0.0",
-  "description": "WS and HTTP metar-map server",
+  "description": "WS and HTTP wx-maps server",
   "main": "index.js",
   "engines": {
     "node": ">=10.16.3"
@@ -29,6 +29,7 @@
     "nodebots-interchange": "^1.3.0",
     "nodemon": "^1.19.4",
     "npm-arch-dependencies": "^0.1.0",
+    "pigpio": "^3.2.3",
     "raspi-io": "^11.0.0",
     "request": "^2.88.0",
     "winston": "^3.2.1",

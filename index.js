@@ -5,6 +5,7 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const https = require('https');
+const pigpio = require('pigpio');
 
 const app = express();
 enableWs(app)
@@ -22,6 +23,21 @@ const logger = require('./lib/logger')('server');
 
 const Message = require('./lib/message');
 const WebSocket = require('./lib/web_socket')
+
+const isProductionMode = () => { return process.env.NODE_ENV === 'production' }
+
+// Solution for failed restarts
+// https://raspberrypi.stackexchange.com/questions/70672/initmboxblock-init-mbox-zaps-failed-when-using-piio-library-in-a-daemon-usi
+const shutdown = () => {
+  logger.info("Goodbye!")
+  pigpio.terminate()
+  process.exit()
+}
+
+process.on('SIGTERM', shutdown);
+process.on('SIGINT', shutdown);
+process.on('SIGCONT', shutdown);
+process.on('SIGTERM', shutdown);
 
 app.use(bodyParser.json());
 app.use(cors());
@@ -44,11 +60,9 @@ mapLightController.call();
 
 // Start Bluetooth device
 (new BLEPeripheral).call();
+isProductionMode();
 
+logger.info('Running in ' + (isProductionMode() ? 'production' : 'development') + ' mode');
 app.listen(port, () => logger.info(`Metar Map listening on port ${port}!`));
 
 
-process.on('SIGTERM', () => {
-  console.log("Exiting on SUGTERM");
-  process.exit()
-})

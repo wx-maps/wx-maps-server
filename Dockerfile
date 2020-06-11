@@ -1,14 +1,11 @@
 FROM balenalib/raspberry-pi
-#FROM resin/raspberry-pi-debian:buster
 WORKDIR /app
-
 
 RUN mkdir -p /app/node_modules && touch /root/.profile
 
 #Install Deps
 RUN install_packages git pigpio python build-essential libudev-dev libbluetooth-dev
 
-COPY package*.json ./
 
 #Install node
 RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
@@ -17,6 +14,8 @@ RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | b
 SHELL ["/bin/bash", "-c", "-i"]
 
 RUN nvm install lts/dubnium && nvm alias default lts/dubnium
+
+COPY package*.json ./
 RUN npm install
 
 COPY . .

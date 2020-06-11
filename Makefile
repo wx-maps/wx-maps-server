@@ -4,7 +4,7 @@ image_name := $(repo_name)/$(image)
 
 .PHONY: build publish
 
-all: build
+all: build publish
 
 build:
 	docker build -t $(image_name) .
