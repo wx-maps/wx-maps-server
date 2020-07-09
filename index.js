@@ -29,6 +29,8 @@ const isProductionMode = () => { return process.env.NODE_ENV === 'production' }
 // Solution for failed restarts
 // https://raspberrypi.stackexchange.com/questions/70672/initmboxblock-init-mbox-zaps-failed-when-using-piio-library-in-a-daemon-usi
 const shutdown = () => {
+  // FIXME We need to kill the tail process from a log message subsscription here
+  // Issue#6
   logger.info("Goodbye!")
   pigpio.terminate()
   process.exit()
