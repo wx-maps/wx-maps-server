@@ -20,7 +20,4 @@ RUN npm install
 
 COPY . .
 
-# FIXME move this to ENV vars?
-RUN mv /app/config /
-
 CMD ["/bin/bash", "-c", "-i", "bin/run.sh"]
